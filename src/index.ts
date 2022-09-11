@@ -1,4 +1,4 @@
-import {Client, GatewayIntentBits} from "discord.js";
+import {Client, Collection, GatewayIntentBits} from "discord.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -6,11 +6,14 @@ dotenv.config();
 console.log("Bot is starting...");
 
 const client: Client = new Client({
-    intents: 1,
+    intents: 513,
 });
 
-['event', 'command'].forEach(async (handler) => {
+
+client.commands = new Collection();
+
+['event', 'command'].forEach(async (handler: string) => {
     const {default: util} = await import(`./utils/handlers/${handler}.util.ts`);
     util(client);
 });
-client.login(process.env.DISCORD_TOKEN);
+void client.login(process.env.DISCORD_TOKEN);
