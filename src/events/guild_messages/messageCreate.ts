@@ -1,11 +1,12 @@
-import {Client, Message} from "discord.js";
+import {Message} from "discord.js";
+import {MySuperClient} from "../../index";
 
 const prefix = '!'
 
 export default {
     name: 'messageCreate',
     once: false,
-    execute(client: Client, message: Message) {
+    execute(client: MySuperClient, message: Message) {
         if (message.author.bot) return;
         if (!message.content.startsWith(prefix)) return;
 
@@ -13,9 +14,8 @@ export default {
         if (args.length === 0) return;
         const cmdName = args?.shift()?.toLowerCase();
         if (!cmdName) return;
-        if (args.length === 0) return;
 
         let cmd = client.commands.get(cmdName);
-        if (cmd) cmd.run(client, message, args);
+        if (cmd) cmd.execute(client, message, args);
     }
 };

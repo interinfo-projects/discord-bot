@@ -1,9 +1,9 @@
-import {Client} from "discord.js";
+import {MySuperClient} from "../../index";
 
 export default {
   name: 'ready',
   once: true,
-  execute(client: Client) {
+  execute(client: MySuperClient) {
     console.log('Je suis prêt!');
   }
 };
