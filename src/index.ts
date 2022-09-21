@@ -1,4 +1,4 @@
-import {Client, ClientOptions, Collection, GatewayIntentBits, Message, Partials} from "discord.js";
+import {Client, ClientOptions, Collection, GatewayIntentBits, Message} from "discord.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -14,7 +14,7 @@ export interface Command {
 export class MySuperClient extends Client {
     public commands: Collection<string, Command>;
 
-    constructor(options: ClientOptions){
+    constructor(options: ClientOptions) {
         super(options);
         this.commands = new Collection();
     }
@@ -34,5 +34,10 @@ const client: Client = new MySuperClient({
     const {default: util} = await import(`./utils/handlers/${handler}.util.ts`);
     util(client);
 });
+
+process.on('exit', (code) => console.log(`Process exit with code :${code}`));
+process.on('uncaughtException', (error, origin) => console.log(`UNCAUGHT_EXCEPTION: ${error}`, `Origin: ${origin}`));
+process.on('unhandledRejection', (reason, promise) => console.log(`UNHANDLED_REJECTION: ${reason}`, promise));
+process.on('warning', (...args) => console.log(...args));
 
 void client.login(process.env.DISCORD_TOKEN);

@@ -8,6 +8,10 @@ export default async (client: MySuperClient) => {
     (await pGlob(`${process.cwd()}/src/commands/*/*.ts`)).map(async (cmdFile) => {
         const {default: cmd} = await import(cmdFile);
 
+        if (!cmd.name) return console.log(`Error : No command name provided in ${cmdFile}.`)
+
         client.commands.set(cmd.name, cmd);
+
+        console.log(`Command loaded: ${cmd.name}`);
     })
 }

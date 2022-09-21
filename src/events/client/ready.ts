@@ -4,6 +4,6 @@ export default {
   name: 'ready',
   once: true,
   execute(client: MySuperClient) {
-    console.log('Je suis prêt!');
+    console.log(`I'm ready!`);
   }
 };
