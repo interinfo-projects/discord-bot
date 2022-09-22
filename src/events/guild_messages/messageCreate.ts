@@ -16,6 +16,6 @@ export default {
         if (!cmdName) return;
 
         let cmd = client.commands.get(cmdName);
-        if (cmd) cmd.execute(client, message, args);
+        if (cmd) cmd.run(client, message, args);
     }
 };

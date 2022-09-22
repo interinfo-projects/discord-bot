@@ -9,6 +9,7 @@ export default async (client: MySuperClient) => {
         const {default: cmd} = await import(cmdFile);
 
         if (!cmd.name) return console.log(`Error : No command name provided in ${cmdFile}.`)
+        if (!cmd.description) return console.log(`Error : No command description provided in ${cmdFile}.`)
 
         client.commands.set(cmd.name, cmd);
 

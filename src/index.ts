@@ -1,4 +1,4 @@
-import {Client, ClientOptions, Collection, GatewayIntentBits, Message} from "discord.js";
+import {Client, ClientOptions, Collection, CommandInteraction, GatewayIntentBits, Message} from "discord.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -9,6 +9,8 @@ export interface Command {
     name: string;
     description: string;
     execute: (client: MySuperClient, message: Message, args: string[]) => any;
+    run: (client: MySuperClient, message: Message, args: string[]) => any;
+    runSlash: (client: MySuperClient, interaction: CommandInteraction) => any;
 }
 
 export class MySuperClient extends Client {
