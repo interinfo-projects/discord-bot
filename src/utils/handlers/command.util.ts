@@ -1,18 +1,21 @@
-import {promisify} from "util";
-import {glob} from "glob";
-import {MySuperClient} from "../../index";
+import { promisify } from 'util'
+import { glob } from 'glob'
+import type { MySuperClient } from '../../index'
 
-const pGlob = promisify(glob);
+const pGlob = promisify(glob)
 
 export default async (client: MySuperClient) => {
-    (await pGlob(`${process.cwd()}/src/commands/*/*.ts`)).map(async (cmdFile) => {
-        const {default: cmd} = await import(cmdFile);
+  (await pGlob(`${process.cwd()}/src/commands/*/*.ts`)).map(async (cmdFile) => {
+    const { default: cmd } = await import(cmdFile)
 
-        if (!cmd.name) return console.log(`Error : No command name provided in ${cmdFile}.`)
-        if (!cmd.description) return console.log(`Error : No command description provided in ${cmdFile}.`)
+    if (!cmd.name)
+      return console.error(`Error : No command name provided in ${cmdFile}.`)
+    if (!cmd.description)
+      return console.error(`Error : No command description provided in ${cmdFile}.`)
 
-        client.commands.set(cmd.name, cmd);
+    client.commands.set(cmd.name, cmd)
 
-        console.log(`Command loaded: ${cmd.name}`);
-    })
+    // eslint-disable-next-line no-console
+    console.log(`Command loaded: ${cmd.name}`)
+  })
 }
